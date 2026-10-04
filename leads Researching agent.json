@@ -1,0 +1,452 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -560,
+        48
+      ],
+      "id": "f00075af-9fe1-4249-b3d1-7baebe2f155e",
+      "name": "On form submission",
+      "webhookId": "44607745-3c5a-4331-801c-15a4d684b468"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1.1,
+      "position": [
+        -208,
+        288
+      ],
+      "id": "2ec27825-436c-48d9-8462-5f672a75c84a",
+      "name": "MongoDB Chat Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -336,
+        48
+      ],
+      "id": "1854e9f9-739b-45fc-8477-6604145368a1",
+      "name": "RESEARCH AGENT"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-5",
+          "cachedResultName": "Claude Sonnet 5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.6,
+      "position": [
+        -336,
+        288
+      ],
+      "id": "c10dad38-c4e9-4480-8a71-0bb7f4a50e08",
+      "name": "BRAIN"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        16,
+        48
+      ],
+      "id": "690a76a2-39d1-4038-a2ac-2feb793b9ae3",
+      "name": "LEAD SCORING AGENT"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        32,
+        288
+      ],
+      "id": "61582975-d759-49e4-b58b-e8214686d46b",
+      "name": "BRAIN 2"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        368,
+        48
+      ],
+      "id": "426a2c72-eda5-4c7e-9536-bdfcb0335deb",
+      "name": "Append or update row in sheet"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        112
+      ],
+      "id": "fe143f25-f7d7-475c-bc45-94f9e8ce75ba",
+      "name": "Send a message",
+      "webhookId": "9e10f343-4709-44d9-9855-b3b4b818dab0"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "199d45aa-eb32-45c1-ad2d-22bf467a9d0c"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ba7808fa-6b38-4637-ad07-f7d584e06d9e",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9bb742f7-b9e5-4e15-97f6-acb5ae854f26",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        32
+      ],
+      "id": "454c58ec-c16b-4e04-b6cb-bfaaa20fe7b7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        -32
+      ],
+      "id": "f7f5d2f7-d653-4678-a187-0ad48d7ece4a",
+      "name": "Reply to a message",
+      "webhookId": "4e4af4ec-b24c-4d71-aec0-c22476171567"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        304
+      ],
+      "id": "ef995540-921d-40be-90b3-db639a4207b8",
+      "name": "Send a message1",
+      "webhookId": "cf1c00f7-0427-4245-98f5-fe64c84fd177"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        288
+      ],
+      "id": "c1119523-24fd-49c6-b013-632f42db6ee4",
+      "name": "Code Tool"
+    },
+    {
+      "parameters": {
+        "content": "## Lead Scoring Agent \n",
+        "height": 672,
+        "width": 528,
+        "color": "#2C9038"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "1551010c-d63e-4a91-9884-556b60e5ae79",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Notify Team",
+        "height": 672,
+        "width": 544
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "2cf17111-d499-464e-93a1-ddc0671a9539",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## NEW LEAD",
+        "height": 672,
+        "width": 160,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -576,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "423bea82-209a-46b4-8ddb-37d3047b95a7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Lead and Company Research Agent\n",
+        "height": 672,
+        "width": 352,
+        "color": "#A14F4F"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -400,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "671301a2-adfd-4925-8411-dbed0671efd9",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "RESEARCH AGENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "RESEARCH AGENT",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BRAIN": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "RESEARCH AGENT",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RESEARCH AGENT": {
+      "main": [
+        [
+          {
+            "node": "LEAD SCORING AGENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BRAIN 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LEAD SCORING AGENT",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LEAD SCORING AGENT": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Reply to a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "LEAD SCORING AGENT",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "95dcf622-eb07-40c7-ace4-6d67b638318a",
+  "meta": {
+    "instanceId": "057cb23e3b89ff9239de33485dee1924c72b4e8aaed956ae7931cb15641d62ea"
+  },
+  "nodeGroups": [],
+  "id": "PzWnQkBgUFzGIizN",
+  "tags": []
+}
